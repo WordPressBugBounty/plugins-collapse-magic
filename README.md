@@ -1,0 +1,1 @@
+# plugins-collapse-magic
