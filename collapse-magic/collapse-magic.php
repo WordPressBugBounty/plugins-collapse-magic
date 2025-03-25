@@ -3,13 +3,13 @@
  * Plugin Name: Collapse Magic (collapse-magic.php)
  * Plugin URI:  http://www.creatorseo.com/collapse-magic/
  * Description: An easy and secure way to display (collapsible) read-more text on a page.
- * Version:     1.3.1
+ * Version:     1.3.3
  * Author:		Clinton [CreatorSEO]
  * Author URI:  http://www.creatorseo.com
  * License:     GPLv3
- * Last change: 2024-10-02
+ * Last change: 2025-03-25
  *
- * Copyright 2024 CreatorSEO (email : info@creatorseo.com)
+ * Copyright 2024-25 CreatorSEO (email : info@creatorseo.com)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License, version 3, as

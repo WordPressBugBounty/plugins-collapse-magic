@@ -3,8 +3,8 @@ Contributors: creatorseo, clinton101
 Donate link: https://leads5050.com/
 Tags: accordion, collapse text, fade text, read-more text, fade content
 Requires at least: 6.1
-Tested up to: 6.7
-Stable tag: 1.3.1
+Tested up to: 6.7.2
+Stable tag: 1.3.3
 Requires PHP: 7.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
@@ -18,7 +18,7 @@ Collapse Magic provides an easy way to display (collapsible) read-more text on a
 **Features**
 
 * Easy to implement
-* Configurable expand and collapse titles
+* Configurable expand and collapse labels
 * Configurable up and down arrows
 * Adjustable visible text height in the collapsed state
 * Adjustable fade-out text visible in the collapsed state
@@ -28,7 +28,7 @@ Collapse Magic provides an easy way to display (collapsible) read-more text on a
 
 Collapse Magic provides an easy way to display (collapsible) read-more text on a page. Also, display a few lines of text and add read-more or expand text.
 
-This plugin was developed when a cross-site scripting vulnerability was identified in collapse-o-matic. This plugin can be used as a direct replacement to collapse-o-matic. There is no need for any on-pages changes to be made for the plugin to work.
+This plugin was developed when a cross-site scripting vulnerability was identified in collapse-o-matic. This plugin can be used as a direct replacement to collapse-o-matic. There is no need for any on-page changes to be made for the plugin to be used as a replacement.
 
 **Set-up**
 
@@ -37,7 +37,14 @@ This plugin was developed when a cross-site scripting vulnerability was identifi
 * Place text between [magic_expand][/magic_expand] tags or between  [expand][/expand] for the toggle to work.
 * Include alternate 'read-more' text if this is required in the shortcode as [magic_expand title="NEW READ-MORE TEXT"].
 * Use alternate 'read-less' text if this is required in the shortcode as [magic_expand swaptitle="NEW READ-LESS TEXT"].
+* Toggle button to set the default location of the expand / collapse label to above or below the section.
 * Single click disable button to switch off the shortcodes and show the full text.
+
+**Shortcode Parameters**
+
+* Read-more / expand label - 'title'. Example [magic_expand title="--more--"].
+* Read-less / collapse label - 'swaptitle'. Example [magic_expand title="--more--" swaptitle="--less--"].
+* Position of the expand label - 'pos'. Example [magic_expand pos="above"] or [magic_expand pos="below"]
 
 == Installation ==
 
@@ -85,6 +92,9 @@ This plugin was inspired by the approach used by:
 - [Nelson Miller: How To Expand And Collapse Text In Divi](https://www.peeayecreative.com/how-to-expand-and-collapse-text-in-divi/): the jQuery code was modified for this plugin.
 
 == Changelog ==
+= 1.3.3 =
+* General maintenance improvements. Debug log error resolved.
+
 = 1.3.1 =
 * Removed the restriction on the amount of text that could be contained in the read-more block.
 

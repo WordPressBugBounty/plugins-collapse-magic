@@ -24,7 +24,7 @@ class claps_main {
 		),
 	    'style' => array(
 			'height' => '1px',
-			'fdheight' => '50px'
+			'fdheight' => '1px'
 		)
     );
 

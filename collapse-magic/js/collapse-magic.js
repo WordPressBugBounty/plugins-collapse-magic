@@ -4,7 +4,7 @@
 
     if ($('.claps-toggle-text').length > 0) {
         //apply the tags and icons to create the toggle
-        $(".claps-toggle-text").each(function() {
+        $('.claps-toggle-text').each(function() {
             //Set some default values in case any data is missing in the transferred div tags
             var expand_title = (typeof $(this).data('title') !== 'undefined')?
                 $(this).data('title'): "Expand To Read More";
@@ -27,6 +27,9 @@
                 $(this).append('<div class= "claps-text-expand-button"><span class= "claps-text-collapse-button">' +
                     '<span class= "claps-text-toggle-icon">' + expand_icon + '</span> ' + expand_title + '</span></div>');
             }
+            console.log('Above?', toggle_above);
+            console.log('HF - Fade', collapse_hf);
+            console.log('HF - Fade', collapse_hf);
             $('.claps-toggle-text .claps-text-toggle-collapsed').css('height', collapse_ht);
             $(this).find(".claps-text-collapse-button").on("click", function() {
                 $(this).parent().siblings(".claps-text-inner").toggleClass("claps-text-toggle-expanded");
