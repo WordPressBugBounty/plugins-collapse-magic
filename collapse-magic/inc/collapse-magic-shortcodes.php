@@ -31,18 +31,21 @@ function claps_main( $atts, $content=null ){
 	);
 	//creator_debug_log('ATTS', $atts);
 	$out = "";
+	
 	if ( isset($options['switches']['enabled']) && $options['switches']['enabled'] ){
 		$ht = (is_string($atts['ht']) && preg_match('/^\d{1,5}(px|pt|em)$/', $atts['ht'])) ? $atts['ht'] : '1px';
 		$hf = (is_string($atts['hf']) && preg_match('/^\d{1,5}(px|pt|em)$/', $atts['hf'])) ? $atts['hf'] : '1px';
 		$above = in_array(strtolower($atts['pos']), [1, 'top', 'above'])? 1: 0;
 		if (!is_null($content) && strlen($content)>0){
-			//$parsed_content = wp_kses_post(do_shortcode($content)); // Process inner shortcodes
-			$parsed_content = wp_kses_post(do_shortcode(shortcode_unautop($content))); // Process inner shortcodes
+			$clean_content = trim($content);
+			$clean_content = shortcode_unautop($clean_content);
+			$clean_content = preg_replace('#^(?:<p>|<br\s*/?>)+|(?:</p>|<br\s*/?>)+$#i', '', $clean_content);
+			$parsed_content = wp_kses_post(do_shortcode($clean_content));
 			$out .= '<div class="claps-toggle-text" ' .
 			        'data-title="' . esc_attr($atts['title']) . '" data-swaptitle="' . esc_attr($atts['swaptitle']) . '" ' .
 			        'data-icon="' . esc_attr($atts['icon']) . '" data-swapicon="' . esc_attr($atts['swapicon']) . '" ' .
 			        'data-ht="' . esc_attr($ht) . '" data-hf="' . esc_attr($hf) . '" ' .
-			        'data-above="' . esc_attr($above) . '" >';
+			        'data-above="' . esc_attr($above) . '">';
 			$out .= '<div class="claps-text-inner claps-text-toggle-collapsed">';
 			$out .= $parsed_content;
 			$out .= '</div>';
