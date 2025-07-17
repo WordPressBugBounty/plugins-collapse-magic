@@ -7,7 +7,7 @@
  * Author:		Clinton [CreatorSEO]
  * Author URI:  http://www.creatorseo.com
  * License:     GPLv3
- * Last change: 2025-06-06
+ * Last change: 2025-07-11
  *
  * Copyright 2024-25 CreatorSEO (email : info@creatorseo.com)
  *

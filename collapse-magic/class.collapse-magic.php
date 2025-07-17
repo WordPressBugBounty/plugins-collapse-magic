@@ -66,13 +66,6 @@ class claps_main {
 	function claps_enqueue_main($hook){
 		wp_enqueue_style('claps-main', plugins_url('css/collapse-magic.css', __FILE__), [], CLAPS_VERSION);
 		wp_enqueue_script('claps-main', plugins_url(('js/collapse-magic.js?x='.wp_rand(5,300)), __FILE__), array('jquery'), '1.0', true);
-		//set any local variables for the script
-//        wp_localize_script('claps-main', 'claps_varz', array(
-//            'ajax_url' => admin_url('admin-ajax.php'),
-//			'page_id' => get_the_ID(),
-//            'hash'=>base64_encode(home_url()),
-//            'nonce'=>wp_create_nonce('claps-nonce'),
-//        ));
 	}
 
 	function claps_enqueue_admin(){
@@ -193,7 +186,7 @@ class claps_main {
 			settings_fields('claps_group'); //This line must be inside the form tags!!
 			echo '<table class="form-table">';
 			echo '<tr class="claps-input-hdr"><th colspan="2">GENERAL SETTINGS</th></tr>';
-//			echo '<tr><th>Name</th><th>State</th></tr>';
+			//echo '<tr><th>Name</th><th>State</th></tr>';
 			if ( is_array( $this->options['switches'] ) ) {
 				foreach ($options['switches'] as $name => $toggle) {
 					$lbl = ucwords(str_replace('_', ' ', $name));
