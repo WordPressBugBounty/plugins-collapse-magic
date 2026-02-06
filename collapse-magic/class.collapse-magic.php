@@ -96,7 +96,7 @@ class claps_main {
 	 */
 	function claps_settings_link($links) {
 		$url = get_admin_url().'options-general.php?page=claps_menu_page';
-		$settings_link = '<a href="'.$url.'">' . __("Settings") . '</a>';
+		$settings_link = '<a href="'.$url.'">' . __("Settings", "collapse-magic") . '</a>';
 		array_unshift( $links, $settings_link );
 		return $links;
 	}

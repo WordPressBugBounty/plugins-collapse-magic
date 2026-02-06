@@ -1,10 +1,10 @@
-﻿=== Collapse Magic (CLAPS) ===
+﻿=== Collapse Magic ===
 Contributors: creatorseo, clinton101
 Donate link: https://leads5050.com/
 Tags: accordion, collapse text, fade text, read-more text, fade content
 Requires at least: 6.1
-Tested up to: 6.7.2
-Stable tag: 1.4.1
+Tested up to: 6.9
+Stable tag: 1.4.2
 Requires PHP: 7.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
@@ -94,6 +94,9 @@ This plugin was inspired by the approach used by:
 - [Nelson Miller: How To Expand And Collapse Text In Divi](https://www.peeayecreative.com/how-to-expand-and-collapse-text-in-divi/): the jQuery code was modified for this plugin.
 
 == Changelog ==
+= 1.4.2 =
+* Version & Conformance checks and improvements
+
 = 1.4.1 =
 * Version checks and minor updates
 

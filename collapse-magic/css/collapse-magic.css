@@ -15,7 +15,9 @@
     display: inline-block;
     position: absolute;
     pointer-events: none;
-    height: 80px;
+    /*noinspection CssUnresolvedCustomProperty*/
+    height: var(--collapse-hf, 80px); /* Fallback to 80px if undefined */
+    /*height: 80px;*/
     width: 100%;
     left: 0;
     right: 0;

@@ -1,9 +1,10 @@
 <?php
 /**
- * Plugin Name: Collapse Magic (collapse-magic.php)
+ * Plugin Name: Collapse Magic
+ * Text Domain: collapse-magic
  * Plugin URI:  http://www.creatorseo.com/collapse-magic/
  * Description: An easy and secure way to display (collapsible) read-more text on a page.
- * Version:     1.4.0
+ * Version:     1.4.2
  * Author:		Clinton [CreatorSEO]
  * Author URI:  http://www.creatorseo.com
  * License:     GPLv3
@@ -31,9 +32,9 @@ if (!defined('WPINC')){
 }
 
 //error_reporting(E_ALL);
-define('CLAPS_VERSION', '1.0.2');
+define('CLAPS_VERSION', '1.4.2');
 define( 'CLAPS_ROOT', __FILE__ );
 define( 'CLAPS_DIR', plugin_dir_path( __FILE__ ) );
 require_once( CLAPS_DIR . 'class.collapse-magic.php');
 
-$pgf = new claps_main(__FILE__);
+$claps_instance = new claps_main(__FILE__);
