@@ -4,7 +4,7 @@ Donate link: https://leads5050.com/
 Tags: accordion, collapse text, fade text, read-more text, fade content
 Requires at least: 6.1
 Tested up to: 6.9
-Stable tag: 1.4.2
+Stable tag: 1.5.0
 Requires PHP: 7.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
@@ -75,7 +75,7 @@ The very first time you view the page after installing the plugin you may need t
 = Why does the plugin not support Accelerated Mobile Pages (AMP)?
 Accelerated Mobile Pages (AMP) has strict limitations on JavaScript, and does not allow jQuery. This breaks the dynamic features that are key to this plugin.
 = Can I nest the collapse shortcodes? =
-Maybe, nesting shortcodes does not always work and if you are using a page builder then this may mangle your shortcodes. Use the classic builder for more chance of success.
+Nesting [magic_expand] shortcodes is not supported. If you need multiple collapsible sections, use separate blocks one after another (not inside each other).
 
 == Screenshots ==
 
@@ -94,6 +94,10 @@ This plugin was inspired by the approach used by:
 - [Nelson Miller: How To Expand And Collapse Text In Divi](https://www.peeayecreative.com/how-to-expand-and-collapse-text-in-divi/): the jQuery code was modified for this plugin.
 
 == Changelog ==
+= 1.5.0 =
+* Code improvements and conformance checks
+* Consistency changes so that JS controls state and CSS controls layout
+
 = 1.4.2 =
 * Version & Conformance checks and improvements
 

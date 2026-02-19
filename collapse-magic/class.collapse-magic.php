@@ -11,22 +11,7 @@ require_once ( CLAPS_DIR . 'inc/collapse-magic-shortcodes.php' );
  */
 class claps_main {
 	protected $pluginloc;
-    protected $options = array(
-	    'switches' => array(
-			'enabled'=>1,
-		    'toggle_above'=>0
-	    ),
-		'data' => array(
-			'title' => 'Expand to read more',
-			'swaptitle' => 'Collapse to read less',
-			'icon' => '&#9660;',
-			'swapicon' => '&#9650;'
-		),
-	    'style' => array(
-			'height' => '1px',
-			'fdheight' => '1px'
-		)
-    );
+	protected $options = [];
 
 
 	/**
@@ -35,14 +20,16 @@ class claps_main {
 	 */
 	public function __construct($loc) {
 		$this->pluginloc = strlen($loc)? $loc: __FILE__;
+		$this->options = claps_default_options();
 		$basename = plugin_basename($this->pluginloc);
 		if (is_admin()){
 			add_action('admin_enqueue_scripts', array($this, 'claps_enqueue_admin'));
 			add_action('admin_init',array($this, 'claps_register_settings'));
 			add_action('admin_menu', array($this, 'claps_admin_menu'));
 			add_filter('plugin_action_links_'.$basename, array($this, 'claps_settings_link'));
+			add_action('wp_dashboard_setup', array($this, 'claps_add_dashboard'));
+//			add_action('dashboard_glance_items', [ $this, 'claps_glance_item' ]);
 //			add_action('add_meta_boxes', array($this, 'claps_add_post_meta_box'));
-//			add_action('wp_dashboard_setup', array($this, 'claps_add_dashboard'));
 			//manage the stored variable and option values when registering or deactivating
 			register_activation_hook($loc, array($this, 'claps_load_options' ));
 			register_deactivation_hook($loc, array($this, 'claps_unset_options' ));
@@ -57,6 +44,7 @@ class claps_main {
 	}
 
 	// -------------------- Add styles and scripts --------------------
+
 	/**
 	 * @param $hook - the admin_enqueue_scripts action provides the $hook_suffix for the current admin page.
 	 * This is used to load the scripts only for the admin pages associated with the plugin
@@ -64,13 +52,31 @@ class claps_main {
 	 * HOOK: "hub5050-insights_page_ract-ranking"
 	 */
 	function claps_enqueue_main($hook){
-		wp_enqueue_style('claps-main', plugins_url('css/collapse-magic.css', __FILE__), [], CLAPS_VERSION);
-		wp_enqueue_script('claps-main', plugins_url(('js/collapse-magic.js?x='.wp_rand(5,300)), __FILE__), array('jquery'), '1.0', true);
+		wp_enqueue_style(
+			'claps-main',
+			plugins_url('css/collapse-magic.css', __FILE__),
+			[], CLAPS_VERSION
+		);
+		
+		wp_enqueue_script(
+			'claps-main',
+			plugins_url('js/collapse-magic.js', __FILE__),
+			['jquery'], CLAPS_VERSION, true
+		);
 	}
-
+	
 	function claps_enqueue_admin(){
-        wp_enqueue_style('claps-admin-css', plugins_url('css/collapse-magic-admin.css', __FILE__), [], CLAPS_VERSION);
-        wp_enqueue_script('claps-admin-js', plugins_url(('js/collapse-magic-admin.js?x='.wp_rand(5,300)), __FILE__), array('jquery'), '1.0', true);
+		wp_enqueue_style(
+			'claps-admin-css',
+			plugins_url('css/collapse-magic-admin.css', __FILE__),
+			[], CLAPS_VERSION
+		);
+		
+		wp_enqueue_script(
+			'claps-admin-js',
+			plugins_url('js/collapse-magic-admin.js', __FILE__),
+			['jquery'], CLAPS_VERSION, true
+		);
 	}
 
 	/**
@@ -140,7 +146,7 @@ class claps_main {
 					}
 				} elseif($att=='style' && is_array($arr)) {
 					foreach ( $arr as $type => $state ) {
-						if (claps_validate_pixel_value($input[$att][$type])) {
+						if (claps_validate_height_value($input[$att][$type])) {
 							$output[$att][$type] = sanitize_text_field($input[$att][$type]);
 						} else {
 							$output[$att][$type] = $this->options[$att][$type];
@@ -172,9 +178,8 @@ class claps_main {
 				'selected' => true,
 			),
 		);
-
-		$options = get_option('claps_options');
-		$options = is_array($options)? array_replace_recursive($this->options, $options): $this->options;
+		
+		$options = claps_get_options();
 		if(current_user_can('manage_options')) {
 			echo '<div class="wrap">';
 			echo '<h2>Option Settings ['.esc_html(get_admin_page_title()).']</h2>';
@@ -227,10 +232,62 @@ class claps_main {
 		} else {
 			wp_die('You do not have sufficient permissions to access this page.');
 		}
-		//$options = get_option('claps_options');
 	}
-
+	
 	// -------------------- Dashboard Widget --------------------
+	/**
+	 * Display a widget on the main dashboard page to advise the user that Collapse Magic is active.
+	 * Other action can later be included here.
+	 * @return void
+	 */
+	public function claps_add_dashboard(){
+		wp_add_dashboard_widget ('claps_dashboard_widget', 'Collapse Magic Notification',array($this, 'claps_dashboard_widget'));
+	}
+	
+	/**
+	 * Include a notice that Easy Admin Menu Manager is active on the site and link this to the menu item.
+	 * @return void
+	 */
+	public function claps_dashboard_widget(){
+		$is_december = ( (int) wp_date('n') === 12 );
+		$img  = $is_december ? 'img/xmas_wishes.png' : 'img/magic-notice.png';
+		$logo = plugins_url( $img, __FILE__ );
+//		$url = add_query_arg(
+//			[ 'page' => 'claps_menu_page' ],
+//			admin_url( 'options-general.php' )
+//		);
+		$url = add_query_arg(
+			[
+				'tab'  => 'search',
+				'type' => 'term',
+				's'    => 'faq-magic',
+			],
+			admin_url( 'plugin-install.php' )
+		);
+		echo '<div class="claps-dashboard-notice">';
+		echo '<a href="' . esc_url( $url ) . '" title="' . esc_attr__( 'Go To Collapse Magic Menu', 'collapse-magic' ) . '">';
+		echo '<img alt="' . esc_attr__( 'Go to the Collapse Magic menu', 'collapse-magic' ) . '" src="' . esc_url( $logo ) . '" style="max-width:100%;height:auto;" />';
+		echo '</a>';
+		echo '</div>';
+	}
+	
+	// -------------------- Glance Item --------------------
+//	public function claps_glance_item() {
+//		if ( ! current_user_can( 'install_plugins' ) ) {
+//			return;
+//		}
+//		$url = add_query_arg(
+//			['s' => 'FAQ Magic', 'tab'=>'search', 'type'=>'term',],
+//			admin_url( 'plugin-install.php' )
+//		);
+//		$label = __( 'Discover FAQ Magic', 'collapse-magic' );
+//		echo '<li class="claps-glance-item">';
+//		echo '<a href="' . esc_url( $url ) . '">';
+//		echo esc_html( $label );
+//		echo '</a>';
+//		echo '</li>';
+//	}
+	
 	// -------------------- Actions --------------------
 	// -------------------- AJAX call function --------------------
 	

@@ -6,6 +6,51 @@
 if ( !defined('ABSPATH') ) exit; //Exit if accessed directly
 
 /**
+ * Return the default Collapse Magic options array.
+ *
+ * @since 1.5.0
+ *
+ * @return array Default options array.
+ */
+function claps_default_options() {
+	return [
+		'switches' => [
+			'enabled'      => 1,
+			'toggle_above' => 0,
+		],
+		'data' => [
+			'title'     => 'Expand to read more',
+			'swaptitle' => 'Collapse to read less',
+			'icon'      => '&#9660;',
+			'swapicon'  => '&#9650;',
+		],
+		'style' => [
+			'height'   => '1px',
+			'fdheight' => '1px',
+		],
+	];
+}
+
+/**
+ * Get Collapse Magic options with defaults merged.
+ *
+ * Ensures a complete and valid options array is always returned.
+ * Stored database values override defaults where present.
+ *
+ * @since 1.5.0
+ *
+ * @return array Complete plugin options array.
+ */
+function claps_get_options() {
+	$defaults = claps_default_options();
+	$stored = get_option('claps_options');
+	if ( ! is_array($stored) ) {
+		return $defaults;
+	}
+	return array_replace_recursive($defaults, $stored);
+}
+
+/**
  * Check that a character code submitted is a valid html entity
  * @param $html_entity
  * @return false|int
@@ -17,14 +62,17 @@ function claps_validate_dec_entity($html_entity) {
 }
 
 /**
- * Validate a pixel value is of the form ####px
- * @param $px
+ * Validate a CSS height value.
+ * Allows numeric values with common CSS units.
+ *
+ * @since 1.5.0
+ *
+ * @param string $value Height value (e.g. 100px, 2em, 50%).
  * @return bool
  */
-function claps_validate_pixel_value($px) {
-	//regular expression pattern
-	$pattern = '/^\d{1,4}px$/';
-	return preg_match($pattern, $px) === 1;
+function claps_validate_height_value($value) {
+	$pattern = '/^\d{1,5}(px|em|rem|vh|vw|%)$/';
+	return is_string($value) && preg_match($pattern, $value) === 1;
 }
 
 /**
@@ -33,7 +81,7 @@ function claps_validate_pixel_value($px) {
  * @return void
  */
 function claps_fetch_styles(){
-	$opts = get_option('claps_options');
+	$opts = claps_get_options();
 	$def = [
 		'height'=>'200px',
 		'fdheight'=>'50px',
@@ -97,7 +145,7 @@ function claps_input_field($def, $display=true){
 	} else {
 		$out .= 'ERROR: Control name not specified';
 	}
-	if ($display) echo  wp_kses_post($out);
+	if ($display) echo wp_kses_post($out);
 	else return $out;
 }
 
@@ -132,7 +180,7 @@ function claps_dynamic_options($elements,$name,$selected,$class='',$display=true
 	} else {
 		$out .= 'ERROR: Control name not specified';
 	}
-	if ($display) echo  wp_kses_post($out);
+	if ($display) echo wp_kses_post($out);
 	else return $out;
 }
 
