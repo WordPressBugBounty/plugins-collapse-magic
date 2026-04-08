@@ -241,7 +241,15 @@ class claps_main {
 	 * @return void
 	 */
 	public function claps_add_dashboard(){
-		wp_add_dashboard_widget ('claps_dashboard_widget', 'Collapse Magic Notification',array($this, 'claps_dashboard_widget'));
+		wp_add_dashboard_widget(
+			'claps_dashboard_widget',
+			'Collapse Magic Notifications',
+			[ $this, 'claps_dashboard_widget' ],
+			null,
+			null,
+			'normal',
+			'high'
+		);
 	}
 	
 	/**
